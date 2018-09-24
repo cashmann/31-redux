@@ -24,7 +24,7 @@ Your lab directory must include
 * **.eslintrc.json** -- with the class .eslintrc.json file
 * **.gitignore** -- with a robust .gitignore
 * **.eslintignore** -- with the class .eslintignore
-* **yarn.lock** -- with the yarn lockfile
+* **package-lock.json** -- with the yarn lockfile
 * **package.json** -- with all dependencies and dev-dependencies
 * **webpack.config.js** -- with webpack config
 * **src/** -- containing the frontend code
