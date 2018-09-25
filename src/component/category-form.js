@@ -30,7 +30,7 @@ export default class ExpenseForm extends Component {
   }
 
   handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, type, value } = e.target;
 
     this.setState({
       [name]: type === 'number' ? +value : value,
@@ -50,9 +50,9 @@ export default class ExpenseForm extends Component {
           />
         <input
           type="number"
-          name="price"
+          name="budget"
           step="0.01"
-          placeholder="price"
+          placeholder="budget"
           value={this.state.budget}
           onChange={this.handleChange}
           />

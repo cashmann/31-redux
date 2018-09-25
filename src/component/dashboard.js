@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
 import CategoryForm from './category-form';
+import CategoryItem from './category-item';
 
 class DashboardContatiner extends React.Component{
   constructor(props){
@@ -46,7 +47,7 @@ class DashboardContatiner extends React.Component{
         <CategoryForm handleComplete = {this.handleAddCategory} />
         <div>
           {this.props.categories.map(category =>(
-            <CategoryItem handleUpdate={this.handleUpdateCategory} handleDelete={this.handleDeleteCategory} />
+            <CategoryItem handleUpdate={this.handleUpdateCategory} handleDelete={this.handleDeleteCategory} category={category} />
           ))}
         </div>
       </React.Fragment>
@@ -57,7 +58,7 @@ class DashboardContatiner extends React.Component{
 const mapStateToProps = (state) =>{
   console.log(state);
   return{
-    categories: state.categories
+    categories: state
   };
 }
 
