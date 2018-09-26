@@ -9,7 +9,6 @@ export default class ExpenseForm extends Component {
   constructor(props) {
     super(props);
 
-    // Initialize form
     this.state = props.category || defaultState;
   }
 
@@ -20,7 +19,7 @@ export default class ExpenseForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log('saving', this.state)
+    console.log('saving', this.state);
     this.props.handleComplete(this.state);
 
     if (!this.props.category) {
@@ -47,7 +46,7 @@ export default class ExpenseForm extends Component {
           placeholder="name"
           value={this.state.name}
           onChange={this.handleChange}
-          />
+        />
         <input
           type="number"
           name="budget"
@@ -55,7 +54,7 @@ export default class ExpenseForm extends Component {
           placeholder="budget"
           value={this.state.budget}
           onChange={this.handleChange}
-          />
+        />
         <button type="submit">
           {this.props.category ? 'Update' : 'Create'}
           {' '}

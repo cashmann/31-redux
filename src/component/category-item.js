@@ -16,7 +16,7 @@ export default class CategoryItem extends React.Component{
     this.props.handleUpdate(category);
   }
   handleClick = (e) =>{
-    this.props.handleDelete(this.state)
+    this.props.handleDelete(this.state);
     if(!this.props.category){
       this.setState(defaultState);
     }
@@ -30,6 +30,6 @@ export default class CategoryItem extends React.Component{
         <button onClick={this.handleClick}>Delete Category</button>
         <CategoryForm category={category} handleComplete={this.updateCategory} />
       </li>
-    )
+    );
   }
 }

@@ -1,4 +1,14 @@
-import {createStore} from 'redux';
-import catReducer from '../reducer/category';
+import {createStore, applyMiddleware} from 'redux';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import logger from './logger';
+import promiseMiddleware from './promise';
+import expenseValidation from './expenses-validation';
+import reducer from '../reducer';
 
-export default ()=> createStore(catReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const middleware = [
+  logger,
+  promiseMiddleware,
+  expenseValidation,
+];
+
+export default ()=> createStore(reducer, composeWithDevTools(applyMiddleware(...middleware)));
