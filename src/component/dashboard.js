@@ -15,7 +15,9 @@ const DashboardContatiner = ({ categories, categoryCreate, categoryDestroy, cate
       <CategoryForm handleComplete = {categoryCreate} />
       <div>
         {categories.map((category, i) =>(
-          <CategoryItem key={i} handleUpdate={categoryUpdate} handleDelete={categoryDestroy} category={category} />
+          <CategoryItem key={i} handleUpdate={categoryUpdate} handleDelete={categoryDestroy} category={category}
+            expenses={expenses.filter(expense => expense.categoryId === category.name)}
+          />
         ))}
       </div>
     </React.Fragment>

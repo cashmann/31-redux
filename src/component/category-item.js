@@ -1,5 +1,7 @@
 import React from 'react';
 import CategoryForm from './category-form';
+import ExpenseForm from './expense-form';
+import ExpenseItem from './expense-item';
 
 const defaultState = {
   _id: null,
@@ -23,12 +25,16 @@ export default class CategoryItem extends React.Component{
   }
 
   render(){
-    const { category } = this.props;
+    const { category, expenses } = this.props;
     return(
       <li>
         {category.name} : ${category.budget}
         <button onClick={this.handleClick}>Delete Category</button>
         <CategoryForm category={category} handleComplete={this.updateCategory} />
+        <ExpenseForm category={category} handleComplete={this.updateExpense} />
+        {expenses.map((expense, i)=>(
+          <ExpenseItem key={i} handleUpdate={expenseUpdate} handleDelete={expenseDelete} expense={expense} category={expense.categoryId} />
+        ))}
       </li>
     );
   }
