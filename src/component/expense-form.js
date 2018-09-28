@@ -43,8 +43,8 @@ export default class ExpenseForm extends Component {
         <input
           type="text"
           name="name"
-          placeholder="title"
-          value={this.state.title}
+          placeholder="name"
+          value={this.state.name}
           onChange={this.handleChange}
         />
         <input
