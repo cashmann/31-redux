@@ -5,7 +5,7 @@ const defaultState = {
   budget: 0,
 };
 
-export default class ExpenseForm extends Component {
+export default class CategoryForm extends Component {
   constructor(props) {
     super(props);
 
@@ -20,6 +20,7 @@ export default class ExpenseForm extends Component {
     e.preventDefault();
 
     console.log('saving', this.state);
+    // TODO: should this set _id?
     this.props.handleComplete(this.state);
 
     if (!this.props.category) {
