@@ -13,7 +13,7 @@ class App extends Component {
     store.dispatch(
       promiseLater({
         type: 'CATEGORY_CREATE',
-        payload: {_id: uuid(), timeStamp: new Date(), name: 'test', budget:'$0'},
+        payload: {_id: uuid(), timeStamp: new Date(), name: 'test', budget:10},
       }, 5000)
     );
   }
