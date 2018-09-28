@@ -6,19 +6,16 @@ import {Provider} from 'react-redux';
 import createAppStore from './lib/store';
 import Dashboard from './component/dashboard';
 const store = createAppStore();
-console.log(store);
+
 
 class App extends Component {
   componentDidMount(){
-    store.subscribe(()=>{
-      console.log('STATE', store.getState());
-    });
-    setTimeout(()=>{
-      store.dispatch({
+    store.dispatch(
+      promiseLater({
         type: 'CATEGORY_CREATE',
         payload: {_id: uuid(), timeStamp: new Date(), name: 'test', budget:'$0'},
-      });
-    }, 2000);
+      }, 5000)
+    );
   }
 
   render() {
@@ -44,3 +41,8 @@ class App extends Component {
 }
 
 export default App;
+
+const promiseLater = (result, timeout) =>
+  new Promise((resolve) =>{
+    setTimeout(() => resolve(result), timeout);
+  });

@@ -2,40 +2,40 @@ import React, { Component } from 'react';
 
 const defaultState = {
   name: '',
-  budget: 0,
+  price: 0,
 };
 
 export default class ExpenseForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = props.category || defaultState;
+    this.state = props.expense || defaultState;
   }
 
   componentDidUpdate() {
-    console.log('__STATE__', this.state);
+    console.log('__FORM_STATE__', this.state);
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
+    console.log(this.state);
 
     console.log('saving', this.state);
     this.props.handleComplete(this.state);
 
-    if (!this.props.category) {
+    if (!this.props.expense) {
       this.setState(defaultState);
     }
-    
   }
 
   handleChange = (e) => {
-    const { name, type, value } = e.target;
+    const { name, value, type } = e.target;
+
 
     this.setState({
       [name]: type === 'number' ? +value : value,
     });
   }
-
 
   render() {
     return (
@@ -43,22 +43,22 @@ export default class ExpenseForm extends Component {
         <input
           type="text"
           name="name"
-          placeholder="name"
-          value={this.state.name}
+          placeholder="title"
+          value={this.state.title}
           onChange={this.handleChange}
         />
         <input
           type="number"
-          name="budget"
+          name="price"
           step="0.01"
-          placeholder="budget"
-          value={this.state.budget}
+          placeholder="price"
+          value={this.state.price}
           onChange={this.handleChange}
         />
         <button type="submit">
-          {this.props.category ? 'Update' : 'Create'}
+          {this.props.expense ? 'Update' : 'Create'}
           {' '}
-          Category
+          Expense
         </button>
       </form>
     );

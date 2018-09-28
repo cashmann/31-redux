@@ -1,108 +1,144 @@
-![cf](http://i.imgur.com/7v5ASc8.png) 31: Budget Tracker
-===
+# ![cf](http://i.imgur.com/7v5ASc8.png) 32: Budget Tracker
 
 ## Submission Instructions
-  * Work in a fork of this repository
-  * Work in a branch on your fork
-  * Write all of your code in a directory named `lab-` + `<your name>` **e.g.** `lab-duncan`
-  * Submit a pull request to this repository
-  * Submit a link to your pull request on canvas
-  * Submit a question, observation, and how long you spent on canvas
 
-## Learning Objectives
-* Students will learn to create frontend routes using react-router-dom
-* Students will learn to restructure their applications into modules
-* Students will learn the difference between view state and application state
-* Students will learn to lift application state to better control one way data flow
-* Students will learn to create and import sass partials
+* Work in a fork of this repository
+* Work in a branch on your fork
+* Write all of your code in a directory named `lab-` + `<your name>` **e.g.** `lab-duncan`
+* Submit a pull request to this repository
+* Submit a link to your pull request on canvas
+* Submit a question, observation, and how long you spent on canvas 
 
-## Requirements
-#### Configuration
-Your lab directory must include
-* **README.md** -- with documention about your lab
-* **.babelrc** -- with all dependencies and dev-dependencies
-* **.eslintrc.json** -- with the class .eslintrc.json file
-* **.gitignore** -- with a robust .gitignore
-* **.eslintignore** -- with the class .eslintignore
-* **package-lock.json** -- with the yarn lockfile
-* **package.json** -- with all dependencies and dev-dependencies
-* **webpack.config.js** -- with webpack config
-* **src/** -- containing the frontend code
-* **src/main.js** -- for appending your app to the DOM
-* **src/action/** -- containing your action creators
-* **src/reducer/** -- containing your reducers
-* **src/lib/** -- containing your redux
-* **src/component/** -- containing your component folders
-* **src/component/app/index.js** -- containing App component, provider, browser router, and route to Dashboard
-* **src/component/dashboard/index.js** -- containing Dashboard component
-* **src/component/category-form/index.js** -- containing CategoryForm component
-* **src/component/category-item/index.js** -- containing CategoryItem component
-* **src/style** -- containing your sass
-* **src/style/main.scss** -- for importing and including reset and base
-* **src/style/_vars.scss** -- sass variables
-* **src/style/_reset.scss** -- sass reset
-* **src/style/_base.scss** -- base styles
-* **src/style/_layout.scss** -- layout styles
+## Requirements  
 
-#### Feature Tasks
-##### category
-* in this app a category should contain at least the following properties
+### Feature Tasks
+
+* complete the Lab 31 tasks
+
+#### expense
+
+* in this app an expense should contain at least the following properties
   * `id` a uuid
+  * `categoryID` an id that corresponds to an existing category
   * `timestamp` a date from when the category was created
   * `name` a string that is the name of the category
-  * `budget` a number that is the total amount of $ in the category
-  * feel free to add more to your categories
+  * `price` a number that is the total amount of $ in the category 
+  * feel free to add more to your expense
 
-##### redux
-###### reducer
-* create a category reducer in your reducer directory
+#### redux
+
+##### app reducer
+
+* export a reducer that holds the entire app state from `reducer/index.js`
+* create a reducer that will combine your categories reducer and expenses reducer
+
+##### expenses reducer
+
+* create a category reducer in your your reducer directory
 * this reducer should support the following interactions
-  * `CATEGORY_CREATE`
-  * `CATEGORY_UPDATE`
-  * `CATEGORY_DESTROY`
+  * `EXPENSE_CREATE` -- store an expense
+  * `EXPENSE_UPDATE` -- update an existing expense
+  * `EXPENSE_DELETE` -- delete an existing expense
+* if you need others feel free to add them
 
-###### action creators
-* you should create an action creator for each interaction supported by your category reducer
+##### action creators
 
-###### store
-* in `lib/store.js` export a function that will return a new redux store from your category reducer
+* you should create an action creator for each interaction supported by your expenses reducer
 
-##### Components
-Create the following components and structure them according to the following diagram.
-```
+##### middleware
+
+* add a `logger` middleware to your application's redux store
+* add validation to your redux reducers
+
+Decide what validation you want to add to your reducers. Ideas might include:
+
+* Prevent an item from being added if it's over budget.
+* Prevent a budget from being created with zero or less dollars.
+* Prevent a budget or item from being created without a name.
+
+##### store
+
+* in `lib/store.js` exports a function that will return a redux store from your app reducer
+
+#### Components
+
+Create the following components and structure them according to the following diagram.  
+
+```text
 App
   Provider
     BrowserRouter
       Route / Dashboard
         CategoryForm -- for creating categories
-        [Category Item]
-           CategoryForm  -- for updating categories
+        [CategoryItem] -- list of CategoryItems
+          CategoryForm  -- for updating categories
+          ExpenseForm -- for creating expenses
+          [ExpenseItem]  -- list of ExpenseItems
+            ExpenseForm -- for updating an expense
 ```
 
-###### App Component
-The App component should set up the Provider for the redux store and the Router.
+##### Update the CategoryItem Component
 
-###### Dashboard Component
-* should be displayed on the `/` route
-* should use react-redux's `connect` to map state and dispatchable methods to props
-* should display a `CategoryForm` for adding categories to the app state
-* should display a `CategoryItem` for each category in the app state
+* should keep all of the features described in lab-31
+* add an ExpenseForm to your category item that enables the user to create expenses on your app state
+* display a list of all the ExpenseItems belonging to the category
 
-###### CategoryForm Component
-* should expect an `onComplete` prop to be a function
-  * that function should be invoked with the CategoryForms state when the form is submitted
-* should expect a `buttonText` prop to configure the submit buttons text
-* should support an optional `category` prop that will initialize the state of the form
+##### ExpenseForm Component 
 
-###### CategoryItem Component
-* should display the category's name and budget
-* should display a delete button
-  * `onClick` the category should be removed from the application state
-* should display a CategoryForm
-  * `onComplete` the form should update the component in the application state
+* should have an `onComplete` prop that will be invoked with the form state onSubmit
+* should support an `expense` prop that will both set the initial form state, and update the state in the hook on `componentWillReceiveProps()`
+* should have a `buttonText` prop that will configure the submit buttons text
 
-#### Test
-* Test each interaction of your category reducer
+##### ExpenseItem Component
 
-#### Documentation
+* should have a button that will delete the expense from the Apps `onClick`
+* should display the `name` and `price` of the component
+* should display an ExpenseForm that will enable the user to update the expense in the app state
+
+### Test
+
+* Test your ExpenseForm and CategoryForm
+* Test all of your action creators
+* Test each reducer used in your combineReducers
+  * test that the validation is working!
+
+### Documentation
+
 Write a description of the project in your README.md
+
+## Example Validation Middleware
+
+Here's an example validating middleware for an application that implements a
+[kanban board](https://leankit.com/learn/kanban/kanban-board/).
+
+This middleware ensures that data attached to the action satisfies requirements,
+like having certain properties (id, content, categoryId).
+
+```js
+const validateCard = store => next => action => {
+  const isCard = action.type && action.type.startsWith('CARD');
+  if (isCard) {
+    try {
+      const card = action.payload;
+      const notValid = !card.id || !card.content || !card.categoryID;
+      if (notValid) {
+        throw new Error('VALIDATION ERROR: card must include id, content, and categoryID');
+      }
+
+      return next(action);
+    } catch (err) {
+      console.error(err);
+
+      return next({
+        type: action.type,
+        payload: err,
+        error: true,
+      });
+    }
+  } else {
+    return next(action);
+  }
+}
+
+export default validateCard;
+```
