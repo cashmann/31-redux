@@ -16,7 +16,8 @@ const DashboardContatiner = ({ categories, categoryCreate, categoryDestroy, cate
       <div>
         {categories.map((category, i) =>(
           <CategoryItem key={i} handleUpdate={categoryUpdate} handleDelete={categoryDestroy} category={category}
-            expenses={expenses.filter(expense => expense.categoryId === category.name)}
+            expenses={expenses.filter(expense => expense.categoryId === category.name)} handleExpenseAdd={expenseAdd}
+            handleExpenseDelete={expenseDelete} handleExpenseUpdate={expenseUpdate}
           />
         ))}
       </div>

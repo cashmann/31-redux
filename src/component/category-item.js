@@ -17,7 +17,7 @@ export default class CategoryItem extends React.Component{
   updateCategory = (category) =>{
     this.props.handleUpdate(category);
   }
-  handleClick = (e) =>{
+  handleClick = () =>{
     this.props.handleDelete(this.state);
     if(!this.props.category){
       this.setState(defaultState);
@@ -26,14 +26,15 @@ export default class CategoryItem extends React.Component{
 
   render(){
     const { category, expenses } = this.props;
+    console.log(expenses);
     return(
       <li>
         {category.name} : ${category.budget}
         <button onClick={this.handleClick}>Delete Category</button>
         <CategoryForm category={category} handleComplete={this.updateCategory} />
-        <ExpenseForm category={category} handleComplete={this.updateExpense} />
+        <ExpenseForm category={category} handleComplete={this.props.handleExpenseAdd} />
         {expenses.map((expense, i)=>(
-          <ExpenseItem key={i} handleUpdate={expenseUpdate} handleDelete={expenseDelete} expense={expense} category={expense.categoryId} />
+          <ExpenseItem key={i} handleUpdate={this.props.handleExpenseUpdate} handleDelete={this.props.handleExpenseDelete} expense={expense} category={expense.categoryId} />
         ))}
       </li>
     );

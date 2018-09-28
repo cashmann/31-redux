@@ -15,10 +15,10 @@ export default store => next => action => {
             'Missing expense information!'));
       }
 
-      if (!payload.title) {
+      if (!payload.name) {
         return store.dispatch(
           errorActions.validationError(
-            'Title is required!'));
+            'Name is required!'));
       }
 
       if (!(payload.price > 0)) {

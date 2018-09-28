@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 const defaultState = {
-  title: '',
+  name: '',
   price: 0,
 };
 
@@ -18,6 +18,7 @@ export default class ExpenseForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    console.log(this.state);
 
     console.log('saving', this.state);
     this.props.handleComplete(this.state);
@@ -41,7 +42,7 @@ export default class ExpenseForm extends Component {
       <form onSubmit={this.handleSubmit}>
         <input
           type="text"
-          name="title"
+          name="name"
           placeholder="title"
           value={this.state.title}
           onChange={this.handleChange}
@@ -59,10 +60,6 @@ export default class ExpenseForm extends Component {
           {' '}
           Expense
         </button>
-        {
-          !this.props.expense &&
-            <button onClick={this.addParking}>Add Parking ($7.50)</button>
-        }
       </form>
     );
   }
