@@ -26,17 +26,36 @@ export default store => next => action => {
           errorActions.validationError(
             'Price must be positive!'));
       }
+
       categories.forEach(cat =>{
-        if (cat.name === payload.categoryId){
-          if(payload.price > cat.budget){
-            return store.dispatch(
-              errorActions.validationError(
-                'Expense is over budget'
-              )
-            );
-          }
+        if (cat.name !== payload.categoryId){
+          return; // not this category
         }
+
+        var priceIsAllowed = payload.price <= cat.budget;
+        if(priceIsAllowed){
+          return; // price is ok
+        }
+
+        return store.dispatch(
+          errorActions.validationError(
+            'Expense is over budget'
+          )
+        );
       });
+
+      /* Option 2: filter before forEach
+      categories
+        .filter(cat => cat.name === payload.categoryId) // Only current category
+        .filter(cat => cat.budget < payload.price) // Expenses too expensive
+        .forEach(() => {
+          return store.dispatch(
+            errorActions.validationError(
+              'Expense is over budget'
+            )
+          );
+        });
+      */
 
       store.dispatch(errorActions.clearError());
       return next(action);

@@ -3,10 +3,14 @@ import { connect } from 'react-redux';
 import CategoryForm from './category-form';
 import CategoryItem from './category-item';
 
-import * as expenseActions from '../action/expense-actions';
 import * as errorActions from '../action/error-actions';
 
-const DashboardContatiner = ({ categories, categoryCreate, categoryDestroy, categoryUpdate, expenses, expenseAdd, expenseDelete, expenseUpdate, error, clearError, validationError }) =>
+const DashboardContatiner = ({
+  categories,
+  categoryCreate, categoryDestroy, categoryUpdate,
+  error,
+  clearError, validationError,
+}) =>
   (
     <React.Fragment>
       <h1>Dashboard</h1>
@@ -15,9 +19,10 @@ const DashboardContatiner = ({ categories, categoryCreate, categoryDestroy, cate
       <CategoryForm handleComplete = {categoryCreate} />
       <div>
         {categories.map((category, i) =>(
-          <CategoryItem key={i} handleUpdate={categoryUpdate} handleDelete={categoryDestroy} category={category}
-            expenses={expenses.filter(expense => expense.categoryId === category.name)} handleExpenseAdd={expenseAdd}
-            handleExpenseDelete={expenseDelete} handleExpenseUpdate={expenseUpdate}
+          <CategoryItem key={i}
+            category={category}
+            handleUpdate={categoryUpdate}
+            handleDelete={categoryDestroy}
           />
         ))}
       </div>
@@ -29,7 +34,6 @@ const mapStateToProps = (state) =>{
   console.log(state);
   return{
     categories: state.categories,
-    expenses: state.expenses,
     error: state.error,
   };
 };
@@ -38,9 +42,6 @@ const mapDispatchToProps = (dispatch) =>({
   categoryCreate: (category) => dispatch({type: 'CATEGORY_CREATE', payload: category}),
   categoryUpdate: (category) => dispatch({type: 'CATEGORY_UPDATE', payload: category}),
   categoryDestroy: (category) => dispatch({type: 'CATEGORY_DESTROY', payload: category}),
-  expenseAdd: (expense) => dispatch(expenseActions.expenseAdd(expense)),
-  expenseUpdate: (expense) => dispatch(expenseActions.expenseUpdate(expense)),
-  expenseDelete: (expense) => dispatch(expenseActions.expenseDelete(expense)),
   clearError: () => dispatch(errorActions.clearError()),
   validationError: (err) => dispatch(errorActions.validationError(err)),
 });
