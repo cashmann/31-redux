@@ -34,7 +34,7 @@ export default class CategoryItem extends React.Component{
         <CategoryForm category={category} handleComplete={this.updateCategory} />
         <ExpenseForm category={category} handleComplete={this.props.handleExpenseAdd} />
         {expenses.map((expense, i)=>(
-          <ExpenseItem key={i} handleUpdate={this.props.handleExpenseUpdate} handleDelete={this.props.handleExpenseDelete} expense={expense} category={expense.categoryId} />
+          <ExpenseItem key={i} handleUpdate={this.props.handleExpenseUpdate} handleDelete={this.props.handleExpenseDelete} expense={expense} category={category} />
         ))}
       </li>
     );

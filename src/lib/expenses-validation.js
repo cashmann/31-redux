@@ -4,10 +4,11 @@ export default store => next => action => {
   console.log(store);
   const { type, payload } = action;
   let categories = store.getState().categories;
+  let error;
   console.log(categories);
 
   switch (type) {
-    case 'EXPENSE_ADD':
+    case 'EXPENSE_CREATE':
     case 'EXPENSE_UPDATE':
       if (!payload) {
         return store.dispatch(
@@ -27,8 +28,10 @@ export default store => next => action => {
             'Price must be positive!'));
       }
       categories.forEach(cat =>{
+        console.log(cat.name, payload.categoryId);
         if (cat.name === payload.categoryId){
           if(payload.price > cat.budget){
+            error = true;
             return store.dispatch(
               errorActions.validationError(
                 'Expense is over budget'
@@ -37,9 +40,11 @@ export default store => next => action => {
           }
         }
       });
-
-      store.dispatch(errorActions.clearError());
-      return next(action);
+      if(!error){
+        store.dispatch(errorActions.clearError());
+        return next(action);
+      }
+      return;
 
     default:
       return next(action);

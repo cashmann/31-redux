@@ -30,10 +30,15 @@ export default class ExpenseForm extends Component {
 
   handleChange = (e) => {
     const { name, value, type } = e.target;
+    let category = this.state.categoryId;
+    if(!category){
+      category = this.props.category.name;
+    }
 
 
     this.setState({
       [name]: type === 'number' ? +value : value,
+      categoryId: category,
     });
   }
 
